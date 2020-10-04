@@ -1,0 +1,33 @@
+﻿@media only screen and (min-width: 800px) {
+    .company-logo {
+        width: 50%;
+        float: left;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .center-job-info {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .company-logo {
+        margin-bottom: -30px;
+    }
+}
+
+.job-title {
+    font-weight: bold;
+}
+
+.job-location {
+    margin-top: -15px;
+}
+
+.job-card {
+    min-height: 525px;
+}
+
+.job {
+    padding-top: 20px
+}
