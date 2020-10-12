@@ -16,7 +16,7 @@ namespace TheProgrammingInn.Com.ViewModels
         [StringLength(75)]
         [Display(Name = "Description")]
         public string Description { get; set; }
-#nullable enable
+        #nullable enable
         public Image? DisplayImage { get; set; }
     }
 }
