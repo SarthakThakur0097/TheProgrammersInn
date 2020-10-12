@@ -8,25 +8,25 @@ using TheProgrammingInn.Com.Models;
 
 namespace TheProgrammingInn.Com.Repository
 {
-    public class PagesRepository : IPagesRepository
+    public class BlogRepository : IBlogRepository
     {
         private readonly Context _context;
-        public PagesRepository(Context context)
+        public BlogRepository(Context context)
         {
             _context = context;
         }
-        public void Insert(Page toInsert)
+        public void Insert(Blog toInsert)
         {
-            _context.Pages.Add(toInsert);
+            _context.Blogs.Add(toInsert);
             _context.SaveChanges();
 
         }
-        public Page GetByTitle(string title) => _context.Pages.SingleOrDefault(p => p.Title == title);
+        public Blog GetByTitle(string title) => _context.Blogs.SingleOrDefault(p => p.Title == title);
         //public List<Page> GetAllPages() => _context.Pages.ToList();
-        public IList<Page> GetAllPages()
+        public IList<Blog> GetAllPages()
         {
-            IList<Page> preImageConversion = _context.Pages.Include(p => p.DisplayImage).ToList();
-            IList<Page> postImageConversion = new List<Page>();
+            IList<Blog> preImageConversion = _context.Blogs.Include(p => p.DisplayImage).ToList();
+            IList<Blog> postImageConversion = new List<Blog>();
             foreach(var pre in preImageConversion)
             {
                 string imageBase64Data = Convert.ToBase64String(pre.DisplayImage.ImageData);
@@ -39,21 +39,21 @@ namespace TheProgrammingInn.Com.Repository
             return postImageConversion;
         }
 
-        public Page Update(Page pageToChange)
+        public Blog Update(Blog pageToChange)
         {
-            var updatedPage = _context.Pages.Attach(pageToChange);
+            var updatedPage = _context.Blogs.Attach(pageToChange);
             updatedPage.State = EntityState.Modified;
             _context.SaveChanges();
 
             return pageToChange;
         }
-        public Page Delete(string title)
+        public Blog Delete(string title)
         {
-            Page page = _context.Pages.Find(title);
+            Blog page = _context.Blogs.Find(title);
 
             if(page != null)
             {
-                _context.Pages.Remove(page);
+                _context.Blogs.Remove(page);
                 _context.SaveChanges();
             }
             return page;

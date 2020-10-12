@@ -1,9 +1,9 @@
-﻿@model TheProgrammingInn.Com.ViewModels.PageViewModel
+﻿@model TheProgrammingInn.Com.ViewModels.CreateBlogViewModel
 @{
     ViewData["Title"] = "AddPage";
 }
 
-<form asp-controller="Admin" asp-action="AddPage" method="post" enctype="multipart/form-data">
+<form asp-controller="Admin" asp-action="CreateBlog" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All">
         <div class="form-group">
             <label asp-for="Title"></label>

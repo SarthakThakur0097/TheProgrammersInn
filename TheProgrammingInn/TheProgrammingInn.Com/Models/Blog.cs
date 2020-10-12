@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace TheProgrammingInn.Com.Models
 {
-    public class Page
+    public class Blog
     {
-        public Page(){}
-        public Page(string title, string description, string content, Image displayImage)
+        public Blog(){}
+        public Blog(string title, string description, string content, Image displayImage)
         {
             Title = title;
             Description = description;

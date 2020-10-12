@@ -3,7 +3,7 @@ using TheProgrammingInn.Com.Models;
 
 namespace TheProgrammingInn.Com.ViewModels
 {
-    public class PageViewModel
+    public class CreateBlogViewModel
     { 
         [Required]
         [Display(Name = "Title")]

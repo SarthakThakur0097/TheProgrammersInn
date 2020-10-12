@@ -20,11 +20,11 @@ namespace TheProgrammingInn.Com.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            PagesRepository pagesRepository;
+            BlogRepository pagesRepository;
 
             using(_context)
             {
-                pagesRepository = new PagesRepository(_context);
+                pagesRepository = new BlogRepository(_context);
                 var pages = pagesRepository.GetAllPages();
                 return View(pages);
             }

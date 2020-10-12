@@ -23,17 +23,17 @@ namespace TheProgrammingInn.Com.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult AddPage()
+        public IActionResult CreateBlog()
         {
-            PageViewModel page = new PageViewModel();
+            CreateBlogViewModel page = new CreateBlogViewModel();
             return View(page);
         }
         [HttpPost]
-        public IActionResult AddPage(PageViewModel viewModel)
+        public IActionResult CreateBlog(CreateBlogViewModel viewModel)
         {
             if(ModelState.IsValid)
             {
-                PagesRepository pagesRepository;
+                BlogRepository pagesRepository;
                 using (_context)
                 {
                     Image img = new Image(); ;
@@ -49,13 +49,13 @@ namespace TheProgrammingInn.Com.Controllers
                         ms.Dispose();
                     }
 
-                    pagesRepository = new PagesRepository(_context);
+                    pagesRepository = new BlogRepository(_context);
 
                     var page = pagesRepository.GetByTitle(viewModel.Title);
 
                     if (page == null)
                     {
-                        Page newPage = new Page(viewModel.Title, viewModel.Description, viewModel.Content, img);
+                        Blog newPage = new Blog(viewModel.Title, viewModel.Description, viewModel.Content, img);
                         pagesRepository.Insert(newPage);
                         return RedirectToAction("Index", "Home");
                     }
@@ -70,16 +70,16 @@ namespace TheProgrammingInn.Com.Controllers
             {
                 title = "test";
             }
-            PagesRepository pagesRepository;
+            BlogRepository pagesRepository;
             
             using(_context)
             {
-                pagesRepository  = new PagesRepository(_context);
+                pagesRepository  = new BlogRepository(_context);
                 var page = pagesRepository.GetByTitle(title);
 
                 if (page == null)
                 {
-                    page = new Page();
+                    page = new Blog();
                     page.Title = title;
 
                     pagesRepository.Insert(page);
@@ -92,11 +92,11 @@ namespace TheProgrammingInn.Com.Controllers
         [HttpPost]
         public IActionResult SavePage(string title, string content)
         {
-            PagesRepository pagesRepository;
+            BlogRepository pagesRepository;
 
             using(_context)
             {
-                pagesRepository = new PagesRepository(_context);
+                pagesRepository = new BlogRepository(_context);
 
                 var page = pagesRepository.GetByTitle(title);
 
