@@ -7,10 +7,10 @@
         @foreach (var pageToPrint in Model)
         {
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="" alt="Card image cap">
+            <img class="card-img-top" src="@pageToPrint.ImageDataURL" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">@pageToPrint.Title</h5>
-                <p class="card-text">@Html.Raw(pageToPrint.Content)</p>
+                <p class="card-text"></p>
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>

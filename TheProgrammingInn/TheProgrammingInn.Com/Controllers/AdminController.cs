@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,47 @@ namespace TheProgrammingInn.Com.Controllers
         [HttpGet]
         public IActionResult AddPage()
         {
-
-            return View();
+            Page page = new Page();
+            return View(page);
         }
-        public IActionResult EditPage(string title)
+        [HttpPost]
+        public IActionResult AddPage(string title, string content)
+        {
+            PagesRepository pagesRepository;
+            using (_context)
+            {
+                Image img = new Image(); ;
+                foreach (var file in Request.Form.Files)
+                {
+                    img.ImageTitle = file.FileName;
+
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    img.ImageData = ms.ToArray();
+
+                    ms.Close();
+                    ms.Dispose();
+                }
+
+                pagesRepository = new PagesRepository(_context);
+
+                var page = pagesRepository.GetByTitle(title);
+
+                if (page == null)
+                {
+                    Page newPage = new Page();
+                    newPage.Title = title;
+                    newPage.Content = content;
+                    newPage.DispalyImage = img;
+
+                    pagesRepository.Insert(newPage);
+                    return RedirectToAction("Index", "Home");
+                }
+                return View();
+            }
+        }
+
+            public IActionResult EditPage(string title)
         {
             if(title == null)
             {

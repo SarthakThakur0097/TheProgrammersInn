@@ -1,9 +1,0 @@
-﻿ul.list-group:after {
-    clear: both;
-    display: block;
-    content: "";
-}
-
-.list-group-item {
-    float: left;
-}

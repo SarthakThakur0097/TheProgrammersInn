@@ -26,7 +26,6 @@ namespace TheProgrammingInn.Com.Controllers
             {
                 pagesRepository = new PagesRepository(_context);
                 var pages = pagesRepository.GetAllPages();
-
                 return View(pages);
             }
         }

@@ -12,7 +12,7 @@ namespace TheProgrammingInn.Com.Repository
         Page GetByTitle(string title);
         Page Update(Page pageToChange);
         Page Delete(string title);
-        List<Page> GetAllPages();
+        IList<Page> GetAllPages();
 
     }
 }
