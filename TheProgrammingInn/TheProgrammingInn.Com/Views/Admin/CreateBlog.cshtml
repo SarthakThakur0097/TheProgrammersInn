@@ -1,0 +1,46 @@
+﻿@model CreateBlogViewModel
+@{
+    ViewData["Title"] = "AddPage";
+}
+
+<form asp-controller="Admin" asp-action="CreateBlog" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All">
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control col-md-2"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control  col-lg-8"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <textarea id="summernote" name="content" class="form-control" rows="30">
+
+        </textarea>
+    </div>
+    <input type="file" id="file1"
+           name="file1"
+           multiple="multiple" />
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+
+@section Scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote();
+        });
+    </script>
+}
+<form asp-action="UploadImage"
+      asp-controller="Home"
+      method="post"
+      enctype="multipart/form-data">
+
+</form>

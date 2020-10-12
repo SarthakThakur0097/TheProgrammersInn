@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TheProgrammingInn.Com.Data;
@@ -21,17 +17,16 @@ namespace TheProgrammingInn.Com.Controllers
             _logger = logger;
             _context = context;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
-            PagesRepository pagesRepository;
+            BlogRepository pagesRepository;
 
             using(_context)
             {
-                pagesRepository = new PagesRepository(_context);
-                var page = pagesRepository.GetByTitle("test");
-
-                return View(page);
+                pagesRepository = new BlogRepository(_context);
+                var pages = pagesRepository.GetAllPages();
+                return View(pages);
             }
         }
 
@@ -39,7 +34,6 @@ namespace TheProgrammingInn.Com.Controllers
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

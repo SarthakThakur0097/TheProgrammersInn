@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheProgrammingInn.Com.Data;
 
 namespace TheProgrammingInn.Com.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20201012213922_UpdateToPageDescription")]
+    partial class UpdateToPageDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,7 +225,25 @@ namespace TheProgrammingInn.Com.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TheProgrammingInn.Com.Models.Blog", b =>
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Page", b =>
                 {
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(450)");
@@ -241,25 +261,7 @@ namespace TheProgrammingInn.Com.Migrations
 
                     b.HasIndex("DisplayImageId");
 
-                    b.ToTable("Blogs");
-                });
-
-            modelBuilder.Entity("TheProgrammingInn.Com.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("ImageData")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ImageTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -313,7 +315,7 @@ namespace TheProgrammingInn.Com.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TheProgrammingInn.Com.Models.Blog", b =>
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Page", b =>
                 {
                     b.HasOne("TheProgrammingInn.Com.Models.Image", "DisplayImage")
                         .WithMany()
