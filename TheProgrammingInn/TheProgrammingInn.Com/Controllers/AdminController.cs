@@ -20,7 +20,12 @@ namespace TheProgrammingInn.Com.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult AddPage()
+        {
 
+            return View();
+        }
         public IActionResult EditPage(string title)
         {
             if(title == null)

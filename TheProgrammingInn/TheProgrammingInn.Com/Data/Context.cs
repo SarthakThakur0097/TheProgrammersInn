@@ -21,7 +21,7 @@ namespace TheProgrammingInn.Com.Data
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
         }
-
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

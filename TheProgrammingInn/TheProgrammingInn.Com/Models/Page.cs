@@ -11,7 +11,8 @@ namespace TheProgrammingInn.Com.Models
         [Key]
         public string Title { get; set; }
         public string Content { get; set; }
-
+        public string Description { get; set; }
+        public Image DispalyImage { get; set; }
 
     }
 }
