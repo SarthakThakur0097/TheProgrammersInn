@@ -17,7 +17,7 @@ namespace TheProgrammingInn.Com.Controllers
             _logger = logger;
             _context = context;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             PagesRepository pagesRepository;

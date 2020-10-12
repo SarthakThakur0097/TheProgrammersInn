@@ -25,11 +25,11 @@ namespace TheProgrammingInn.Com.Repository
         //public List<Page> GetAllPages() => _context.Pages.ToList();
         public IList<Page> GetAllPages()
         {
-            IList<Page> preImageConversion = _context.Pages.Include(p => p.DispalyImage).ToList();
+            IList<Page> preImageConversion = _context.Pages.Include(p => p.DisplayImage).ToList();
             IList<Page> postImageConversion = new List<Page>();
             foreach(var pre in preImageConversion)
             {
-                string imageBase64Data = Convert.ToBase64String(pre.DispalyImage.ImageData);
+                string imageBase64Data = Convert.ToBase64String(pre.DisplayImage.ImageData);
 
                 string imageDataURL = string.Format("data:image/jpg;base64, {0}", imageBase64Data);
                 pre.ImageDataURL = imageDataURL;

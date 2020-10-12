@@ -1,11 +1,21 @@
-﻿@model Page
+﻿@model TheProgrammingInn.Com.ViewModels.PageViewModel
 @{
     ViewData["Title"] = "AddPage";
 }
 
 <form asp-controller="Admin" asp-action="AddPage" method="post" enctype="multipart/form-data">
-    
-    <input name="title" type="text" />
+    <div asp-validation-summary="All" class="text-danger">
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control col-md-2"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control  col-lg-8"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
     <div class="form-group">
         <textarea id="summernote" name="content" class="form-control" rows="30">
 

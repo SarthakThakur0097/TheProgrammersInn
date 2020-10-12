@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Models;
 using TheProgrammingInn.Com.Repository;
+using TheProgrammingInn.Com.ViewModels;
 
 namespace TheProgrammingInn.Com.Controllers
 {
@@ -24,11 +25,11 @@ namespace TheProgrammingInn.Com.Controllers
         [HttpGet]
         public IActionResult AddPage()
         {
-            Page page = new Page();
+            PageViewModel page = new PageViewModel();
             return View(page);
         }
         [HttpPost]
-        public IActionResult AddPage(string title, string content)
+        public IActionResult AddPage(string title, string description, string content)
         {
             PagesRepository pagesRepository;
             using (_context)
@@ -52,11 +53,7 @@ namespace TheProgrammingInn.Com.Controllers
 
                 if (page == null)
                 {
-                    Page newPage = new Page();
-                    newPage.Title = title;
-                    newPage.Content = content;
-                    newPage.DispalyImage = img;
-
+                    Page newPage = new Page(title, description, content, img);
                     pagesRepository.Insert(newPage);
                     return RedirectToAction("Index", "Home");
                 }
