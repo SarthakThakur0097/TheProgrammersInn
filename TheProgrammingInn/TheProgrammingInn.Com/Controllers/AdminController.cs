@@ -29,39 +29,42 @@ namespace TheProgrammingInn.Com.Controllers
             return View(page);
         }
         [HttpPost]
-        public IActionResult AddPage(string title, string description, string content)
+        public IActionResult AddPage(PageViewModel viewModel)
         {
-            PagesRepository pagesRepository;
-            using (_context)
+            if(ModelState.IsValid)
             {
-                Image img = new Image(); ;
-                foreach (var file in Request.Form.Files)
+                PagesRepository pagesRepository;
+                using (_context)
                 {
-                    img.ImageTitle = file.FileName;
+                    Image img = new Image(); ;
+                    foreach (var file in Request.Form.Files)
+                    {
+                        img.ImageTitle = file.FileName;
 
-                    MemoryStream ms = new MemoryStream();
-                    file.CopyTo(ms);
-                    img.ImageData = ms.ToArray();
+                        MemoryStream ms = new MemoryStream();
+                        file.CopyTo(ms);
+                        img.ImageData = ms.ToArray();
 
-                    ms.Close();
-                    ms.Dispose();
+                        ms.Close();
+                        ms.Dispose();
+                    }
+
+                    pagesRepository = new PagesRepository(_context);
+
+                    var page = pagesRepository.GetByTitle(viewModel.Title);
+
+                    if (page == null)
+                    {
+                        Page newPage = new Page(viewModel.Title, viewModel.Description, viewModel.Content, img);
+                        pagesRepository.Insert(newPage);
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
-
-                pagesRepository = new PagesRepository(_context);
-
-                var page = pagesRepository.GetByTitle(title);
-
-                if (page == null)
-                {
-                    Page newPage = new Page(title, description, content, img);
-                    pagesRepository.Insert(newPage);
-                    return RedirectToAction("Index", "Home");
-                }
-                return View();
             }
+            return View(viewModel);
         }
 
-            public IActionResult EditPage(string title)
+        public IActionResult EditPage(string title)
         {
             if(title == null)
             {
