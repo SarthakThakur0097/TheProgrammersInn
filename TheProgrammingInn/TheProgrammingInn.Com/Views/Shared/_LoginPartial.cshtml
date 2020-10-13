@@ -1,9 +1,8 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<ApplicationUser> SignInManager
+﻿@inject SignInManager<ApplicationUser> signInManager
 @inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav ml-auto">
- @if (SignInManager.IsSignedIn(User))
+@if (signInManager.IsSignedIn(User))
 {
     <li class="navbar-nav ml-auto" >
         <form method="post" asp-action="logout" asp-controller="account">
@@ -20,7 +19,6 @@
         <a class="nav-link text-dark" asp-controller="account" asp-action="register">
             Register
         </a>
-
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="account" asp-action="login">

@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Models;
@@ -10,14 +12,59 @@ namespace TheProgrammingInn.Com.Controllers
     public class AdminController : Controller
     {
         private readonly Context _context;
-        public AdminController(Context context)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public AdminController(Context context, RoleManager<IdentityRole> roleManager,
+                                                UserManager<ApplicationUser> userManager,)
         {
             _context = context;
+            _roleManager = roleManager;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult CreateRole()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+
+            return View(users);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                IdentityRole identityRole = new IdentityRole
+                {
+                    Name = model.RoleName
+                };
+
+                IdentityResult result = await _roleManager.CreateAsync(identityRole);
+
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+
+                foreach (IdentityError error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult CreateBlog()
         {
