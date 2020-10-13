@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Repository;
@@ -16,6 +14,7 @@ namespace TheProgrammingInn.Com.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public IActionResult Index(string title)
         {
