@@ -11,7 +11,8 @@
             <div class="card-body">
                 <h5 class="card-title">@pageToPrint.Title</h5>
                 <p class="card-text">@pageToPrint.Description</p>
-                <a href="#" class="btn btn-primary">View</a>
+                <a  ref="#" class="btn btn-primary"
+                   asp-controller="Blog" asp-action="Index" asp-route-title="@pageToPrint.Title">View</a>
             </div>
         </div>
         }
