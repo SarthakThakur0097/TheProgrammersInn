@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -64,6 +62,7 @@ namespace TheProgrammingInn.Com.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
+
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -84,7 +83,7 @@ namespace TheProgrammingInn.Com.Controllers
                     ViewBag.ErrorMessage = "Before you can Login, please confirm your " +
                         "email, by clicking on the confirmation link we have emailed you";
 
-                    return View("Error");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 foreach (var error in result.Errors)

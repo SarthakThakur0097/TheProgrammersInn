@@ -1,4 +1,4 @@
-﻿
+﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -12,27 +12,42 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center">Register</h5>
-                    <form class="form-signin">
+                    <form form asp-controller="account" asp-action="register" method="post" class="form-signin">
+                        <div asp-validation-summary="All"></div>
                         <div class="form-label-group">
-                            <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
-                            <label for="inputUserame">Username</label>
+                            <input asp-for="FirstName" type="text" id="inputFirstName" class="form-control" placeholder="First Name" required autofocus>
+                            <label asp-for="FirstName" for="inputFirstName">First Name</label>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
-                            <label for="inputEmail">Email address</label>
+                            <input asp-for="LastName" type="text" id="inputLastName" class="form-control" placeholder="Last Name" required autofocus>
+                            <label asp-for="LastName" for="inputLastName">Last Name</label>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input asp-for="UserName" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            <label asp-for="UserName" for="inputUsername">Username</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input asp-for="Email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+                            <label asp-for="Email" for="inputEmail">Email address</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <hr>
 
                         <div class="form-label-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                            <label for="inputPassword">Password</label>
+                            <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <label asp-for="Password" for="inputPassword">Password</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
-                            <label for="inputConfirmPassword">Confirm password</label>
+                            <input asp-for="ConfirmPassword" type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                            <label asp-for="ConfirmPassword" for="inputConfirmPassword">Confirm password</label>
                         </div>
 
                         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
