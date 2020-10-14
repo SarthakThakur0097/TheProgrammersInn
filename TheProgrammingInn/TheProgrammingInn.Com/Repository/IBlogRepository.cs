@@ -13,6 +13,5 @@ namespace TheProgrammingInn.Com.Repository
         Blog Update(Blog pageToChange);
         Blog Delete(string title);
         IList<Blog> GetAllPages();
-
     }
 }

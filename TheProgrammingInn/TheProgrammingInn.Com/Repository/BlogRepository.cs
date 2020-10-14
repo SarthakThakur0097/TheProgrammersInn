@@ -22,6 +22,8 @@ namespace TheProgrammingInn.Com.Repository
         }
         public Blog GetByTitle(string title) => ImageConversion(_context.Blogs
             .Include(p => p.DisplayImage)
+            .Include(p => p.MainComments)
+                .ThenInclude(mc => mc.SubComments)
             .SingleOrDefault(p => p.Title == title));
         public IList<Blog> GetAllPages() => ImageConversion(_context.Blogs
             .Include(p => p.DisplayImage)

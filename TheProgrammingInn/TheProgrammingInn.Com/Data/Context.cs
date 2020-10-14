@@ -20,6 +20,8 @@ namespace TheProgrammingInn.Com.Data
             }
         }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<MainComment> MainComments { get; set; }
+        public DbSet<SubComment> SubComments { get; set; }
         public DbSet<Image> Images { get; set; }
     }
 }
