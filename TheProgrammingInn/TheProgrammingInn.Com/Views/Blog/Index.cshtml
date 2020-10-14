@@ -56,10 +56,10 @@
 
                 </div>
                 <div style="margin-left: 40px;">
-                    <h4>Sub Comments</h4>
                     @{
                         await Html.RenderPartialAsync("_MainComment", new CommentViewModel { BlogTitle = Model.Title, MainCommentId = Model.MainComments[i].Id });
                     }
+                    <h4>Replies</h4>
                     @for (int j = Model.MainComments[i].SubComments.Count - 1; j >= 0; j--)
                     {
                         <div class="media mb-4">

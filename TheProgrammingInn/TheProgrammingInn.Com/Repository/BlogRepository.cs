@@ -20,12 +20,20 @@ namespace TheProgrammingInn.Com.Repository
             _context.SaveChanges();
 
         }
-        public Blog GetByTitle(string title) => ImageConversion(_context.Blogs
+        public Blog GetByTitle(string title) 
+        {
+            if (GetAllBlogs().Count == 0)
+                return null;
+            var blog = _context.Blogs
             .Include(p => p.DisplayImage)
             .Include(p => p.MainComments)
                 .ThenInclude(mc => mc.SubComments)
-            .SingleOrDefault(p => p.Title == title));
-        public IList<Blog> GetAllPages() => ImageConversion(_context.Blogs
+            .SingleOrDefault(p => p.Title == title);
+            if (blog == null)
+                return null;
+            return ImageConversion(blog);
+            }
+        public IList<Blog> GetAllBlogs() => ImageConversion(_context.Blogs
             .Include(p => p.DisplayImage)
             .ToList());
       

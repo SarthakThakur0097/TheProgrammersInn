@@ -30,7 +30,7 @@ namespace TheProgrammingInn.Com.Controllers
             using(_context)
             {
                 pagesRepository = new BlogRepository(_context);
-                var pages = pagesRepository.GetAllPages();
+                var pages = pagesRepository.GetAllBlogs();
                 return View(pages);
             }
         }
