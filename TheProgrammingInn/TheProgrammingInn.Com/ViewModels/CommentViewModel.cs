@@ -9,7 +9,7 @@ namespace TheProgrammingInn.Com.ViewModels
     public class CommentViewModel
     {
         [Required]
-        public string PostId { get; set; }
+        public string BlogTitle { get; set; }
         [Required]
         public int MainCommentId { get; set; }
         [Required]

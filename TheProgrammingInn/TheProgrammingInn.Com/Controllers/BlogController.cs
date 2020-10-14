@@ -32,13 +32,13 @@ namespace TheProgrammingInn.Com.Controllers
 
         public IActionResult Comment(CommentViewModel viewModel)
         {
-            if (ModelState.IsValid)
-                return RedirectToAction();
-
             using (_context)
             {
-                var blog = new BlogRepository(_context).GetByTitle(viewModel.PostId);
-                if (viewModel.MainCommentId > 0)
+                if (!ModelState.IsValid)
+                    return RedirectToAction("Index", new { title = viewModel.BlogTitle });
+
+                var blog = new BlogRepository(_context).GetByTitle(viewModel.BlogTitle);
+                if (viewModel.MainCommentId == 0)
                 {
                     blog.MainComments = blog.MainComments ?? new List<MainComment>();
                     blog.MainComments.Add(new MainComment
@@ -46,6 +46,7 @@ namespace TheProgrammingInn.Com.Controllers
                         Message = viewModel.Message,
                         Created = DateTime.Now,
                     });
+                    new BlogRepository(_context).Update(blog);
                 }
                 else
                 {
@@ -55,10 +56,11 @@ namespace TheProgrammingInn.Com.Controllers
                         Message = viewModel.Message,
                         Created = DateTime.Now
                     };
+                    new SubCommentRepository(_context).Insert(comment);
                 }
             }
 
-            return View();
+            return RedirectToAction("Index", new { title = viewModel.BlogTitle });
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿@model CommentViewModel
+@{
+    ViewData["Title"] = "_MainComment";
+}
+
+<div class="card my-4">
+    <h5 class="card-header">Leave a Comment:</h5>
+    <div class="card-body">
+        <form method="post" asp-controller="blog" asp-action="comment">
+            <div class="form-group">
+                <input asp-for="BlogTitle" type="hidden" />
+                <input asp-for="MainCommentId" type="hidden" />
+                <textarea asp-for="Message" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

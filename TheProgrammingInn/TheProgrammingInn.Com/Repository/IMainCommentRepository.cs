@@ -12,6 +12,6 @@ namespace TheProgrammingInn.Com.Repository
         MainComment GetById(int id);
         MainComment Update(MainComment commentToChange);
         MainComment Delete(int id);
-        public IList<MainComment> GetAllCommentsByBlogTitle();
+        IList<MainComment> GetAllCommentsByBlogTitle(string title);
     }
 }
