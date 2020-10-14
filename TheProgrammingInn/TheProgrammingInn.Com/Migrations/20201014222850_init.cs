@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TheProgrammingInn.Com.Migrations
 {
-    public partial class AddPages : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,15 +49,17 @@ namespace TheProgrammingInn.Com.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pages",
+                name: "Images",
                 columns: table => new
                 {
-                    Title = table.Column<string>(nullable: false),
-                    Content = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageTitle = table.Column<string>(nullable: true),
+                    ImageData = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pages", x => x.Title);
+                    table.PrimaryKey("PK_Images", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,6 +168,69 @@ namespace TheProgrammingInn.Com.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    Title = table.Column<string>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    DisplayImageId = table.Column<int>(nullable: true),
+                    dateTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.Title);
+                    table.ForeignKey(
+                        name: "FK_Blogs_Images_DisplayImageId",
+                        column: x => x.DisplayImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MainComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    BlogId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MainComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MainComments_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
+                        principalColumn: "Title",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    MainCommentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubComments_MainComments_MainCommentId",
+                        column: x => x.MainCommentId,
+                        principalTable: "MainComments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -204,6 +269,21 @@ namespace TheProgrammingInn.Com.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_DisplayImageId",
+                table: "Blogs",
+                column: "DisplayImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MainComments_BlogId",
+                table: "MainComments",
+                column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubComments_MainCommentId",
+                table: "SubComments",
+                column: "MainCommentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -224,13 +304,22 @@ namespace TheProgrammingInn.Com.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Pages");
+                name: "SubComments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "MainComments");
+
+            migrationBuilder.DropTable(
+                name: "Blogs");
+
+            migrationBuilder.DropTable(
+                name: "Images");
         }
     }
 }

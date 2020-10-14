@@ -10,8 +10,8 @@ using TheProgrammingInn.Com.Data;
 namespace TheProgrammingInn.Com.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201012212932_AddedDescriptionToPage")]
-    partial class AddedDescriptionToPage
+    [Migration("20201014222850_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -225,6 +225,30 @@ namespace TheProgrammingInn.Com.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Blog", b =>
+                {
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplayImageId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("dateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Title");
+
+                    b.HasIndex("DisplayImageId");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("TheProgrammingInn.Com.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -243,22 +267,50 @@ namespace TheProgrammingInn.Com.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("TheProgrammingInn.Com.Models.Page", b =>
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
                 {
-                    b.Property<string>("Title")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BlogId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Content")
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DisplayImageId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("MainComments");
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MainCommentId")
                         .HasColumnType("int");
 
-                    b.HasKey("Title");
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("DisplayImageId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Pages");
+                    b.HasIndex("MainCommentId");
+
+                    b.ToTable("SubComments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,12 +364,29 @@ namespace TheProgrammingInn.Com.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TheProgrammingInn.Com.Models.Page", b =>
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Blog", b =>
                 {
                     b.HasOne("TheProgrammingInn.Com.Models.Image", "DisplayImage")
                         .WithMany()
                         .HasForeignKey("DisplayImageId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
+                {
+                    b.HasOne("TheProgrammingInn.Com.Models.Blog", "Blog")
+                        .WithMany("MainComments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
+                {
+                    b.HasOne("TheProgrammingInn.Com.Models.MainComment", "MainComment")
+                        .WithMany("SubComments")
+                        .HasForeignKey("MainCommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

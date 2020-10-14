@@ -237,6 +237,9 @@ namespace TheProgrammingInn.Com.Migrations
                     b.Property<int?>("DisplayImageId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("dateTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Title");
 
                     b.HasIndex("DisplayImageId");
@@ -260,6 +263,52 @@ namespace TheProgrammingInn.Com.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BlogId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("MainComments");
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MainCommentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MainCommentId");
+
+                    b.ToTable("SubComments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -319,6 +368,23 @@ namespace TheProgrammingInn.Com.Migrations
                         .WithMany()
                         .HasForeignKey("DisplayImageId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
+                {
+                    b.HasOne("TheProgrammingInn.Com.Models.Blog", "Blog")
+                        .WithMany("MainComments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
+                {
+                    b.HasOne("TheProgrammingInn.Com.Models.MainComment", "MainComment")
+                        .WithMany("SubComments")
+                        .HasForeignKey("MainCommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

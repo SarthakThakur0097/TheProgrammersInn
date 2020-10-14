@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheProgrammingInn.Com.Models
@@ -22,5 +24,7 @@ namespace TheProgrammingInn.Com.Models
         public Image? DisplayImage { get; set; }
         [NotMapped]
         public string ImageDataURL { get; set; }
+        public DateTime dateTime { get; set; } = DateTime.Now;
+        public List<MainComment> MainComments { get; set; }
     }
 }
