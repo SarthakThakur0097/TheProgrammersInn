@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TheProgrammingInn.Com.Data;
@@ -10,6 +11,7 @@ using TheProgrammingInn.Com.ViewModels;
 
 namespace TheProgrammingInn.Com.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly Context _context;

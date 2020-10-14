@@ -39,9 +39,12 @@ namespace TheProgrammingInn.Com
                 options.Password.RequiredLength = 5;
 
             })
-            .AddEntityFrameworkStores<Context>()
-            .AddDefaultTokenProviders();
-
+                .AddEntityFrameworkStores<Context>()
+                .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+            });
             services.AddControllersWithViews();
         }
 
@@ -63,8 +66,8 @@ namespace TheProgrammingInn.Com
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

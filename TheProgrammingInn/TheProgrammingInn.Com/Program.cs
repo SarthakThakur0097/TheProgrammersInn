@@ -41,7 +41,7 @@ namespace TheProgrammingInn.Com
                     {
                         FirstName = "Admin",
                         LastName = "Admin",
-                        UserName = "admin",
+                        UserName = "admin@gmail.com",
                         Email = "admin@gmail.com"
                     };
                     userManager.CreateAsync(adminUser, "password").GetAwaiter().GetResult();

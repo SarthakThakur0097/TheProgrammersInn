@@ -10,6 +10,7 @@ using TheProgrammingInn.Com.ViewModels;
 
 namespace TheProgrammingInn.Com.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -26,7 +27,6 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [AcceptVerbs("Get", "Post")]
-        [AllowAnonymous]
         public async Task<IActionResult> IsEmailInUse(string email)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -42,7 +42,6 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Register()
         {
             //ViewData["User"]
@@ -50,7 +49,7 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -97,7 +96,6 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
             LoginViewModel viewModel = new LoginViewModel
@@ -110,14 +108,13 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
-                //var user = await userManager.FindByNameAsync(model.Email);
+                var user = await userManager.FindByNameAsync(model.Email);
 
                 //if (user != null && !user.EmailConfirmed &&
                 //                    (await userManager.CheckPasswordAsync(user, model.Password)))
@@ -126,7 +123,7 @@ namespace TheProgrammingInn.Com.Controllers
 
                 //    return View(model);
                 //}
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password,
+                var result = await signInManager.PasswordSignInAsync(user, model.Password,
                     model.RememberMe, false);
 
                 if (result.Succeeded)
@@ -146,7 +143,6 @@ namespace TheProgrammingInn.Com.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult ExternalLogin(string provider, string returnIrl)
         {
@@ -158,7 +154,6 @@ namespace TheProgrammingInn.Com.Controllers
             return new ChallengeResult(provider, properties);
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -244,7 +239,6 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             return View();
