@@ -32,6 +32,12 @@ namespace TheProgrammingInn.Com
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
+                //Customize Idenitity
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
+
             })
             .AddEntityFrameworkStores<Context>()
             .AddDefaultTokenProviders();
