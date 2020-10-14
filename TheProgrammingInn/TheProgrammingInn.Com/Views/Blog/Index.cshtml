@@ -43,29 +43,30 @@
             @{
                 await Html.RenderPartialAsync("_MainComment", new CommentViewModel { BlogTitle = Model.Title, MainCommentId = 0 });
             }
-            @foreach (var c in Model.MainComments)
+
+            @for (int i = Model.MainComments.Count - 1; i >= 0; i--)
             {
                 <!-- Single Comment -->
                 <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                     <div class="media-body">
                         <h5 class="mt-0">Commenter Name</h5>
-                        @c.Message --- @c.Created
+                        @Model.MainComments[i].Message --- @Model.MainComments[i].Created
                     </div>
 
                 </div>
-                <div style="margin-left: 20px;">
+                <div style="margin-left: 40px;">
                     <h4>Sub Comments</h4>
                     @{
-                        await Html.RenderPartialAsync("_MainComment", new CommentViewModel { BlogTitle = Model.Title, MainCommentId = 0 });
+                        await Html.RenderPartialAsync("_MainComment", new CommentViewModel { BlogTitle = Model.Title, MainCommentId = Model.MainComments[i].Id });
                     }
-                    @foreach (var sc in c.SubComments)
+                    @for (int j = Model.MainComments[i].SubComments.Count - 1; j >= 0; j--)
                     {
                         <div class="media mb-4">
                             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                             <div class="media-body">
                                 <h5 class="mt-0">Commenter Name</h5>
-                                @sc.Message --- @sc.Created
+                                @Model.MainComments[i].SubComments[j].Message --- @Model.MainComments[i].SubComments[j].Created
                             </div>
                         </div>
                     }
