@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Repository;
 
 namespace TheProgrammingInn.Com.Controllers
 {
+    [AllowAnonymous]
     public class BlogController : Controller
     {
         private readonly Context _context;

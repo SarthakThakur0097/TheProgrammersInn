@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TheProgrammingInn.Com.Data;
@@ -7,6 +8,7 @@ using TheProgrammingInn.Com.Repository;
 
 namespace TheProgrammingInn.Com.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -32,10 +32,19 @@ namespace TheProgrammingInn.Com
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-            })
-            .AddEntityFrameworkStores<Context>()
-            .AddDefaultTokenProviders();
+                //Customize Idenitity
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
 
+            })
+                .AddEntityFrameworkStores<Context>()
+                .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+            });
             services.AddControllersWithViews();
         }
 
@@ -57,8 +66,8 @@ namespace TheProgrammingInn.Com
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
