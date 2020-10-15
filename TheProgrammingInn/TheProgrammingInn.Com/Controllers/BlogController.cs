@@ -29,7 +29,6 @@ namespace TheProgrammingInn.Com.Controllers
             }
         }
 
-
         public IActionResult Comment(CommentViewModel viewModel)
         {
             using (_context)
@@ -59,7 +58,6 @@ namespace TheProgrammingInn.Com.Controllers
                     new SubCommentRepository(_context).Insert(comment);
                 }
             }
-
             return RedirectToAction("Index", new { title = viewModel.BlogTitle });
         }
     }
