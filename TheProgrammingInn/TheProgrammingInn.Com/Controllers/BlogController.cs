@@ -29,6 +29,7 @@ namespace TheProgrammingInn.Com.Controllers
             }
         }
 
+        [HttpPost]
         public IActionResult Comment(CommentViewModel viewModel)
         {
             using (_context)
