@@ -28,6 +28,9 @@ namespace TheProgrammingInn.Com.Repository
             .Include(p => p.DisplayImage)
             .Include(p => p.MainComments)
                 .ThenInclude(mc => mc.SubComments)
+                .ThenInclude(sc => sc.ApplicationUser)
+            .Include(p => p.MainComments)
+                .ThenInclude(mc => mc.ApplicationUser)
             .SingleOrDefault(p => p.Title == title);
             if (blog == null)
                 return null;
