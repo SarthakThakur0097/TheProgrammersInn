@@ -272,6 +272,9 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("BlogId")
                         .HasColumnType("nvarchar(450)");
 
@@ -282,6 +285,8 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BlogId");
 
@@ -295,6 +300,9 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -305,6 +313,8 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("MainCommentId");
 
@@ -372,6 +382,11 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
                 {
+                    b.HasOne("TheProgrammingInn.Com.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("MainComments")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("TheProgrammingInn.Com.Models.Blog", "Blog")
                         .WithMany("MainComments")
                         .HasForeignKey("BlogId")
@@ -380,6 +395,11 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
                 {
+                    b.HasOne("TheProgrammingInn.Com.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("SubComments")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("TheProgrammingInn.Com.Models.MainComment", "MainComment")
                         .WithMany("SubComments")
                         .HasForeignKey("MainCommentId")
