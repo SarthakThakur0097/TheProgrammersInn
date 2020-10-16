@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheProgrammingInn.Com.Data;
 
 namespace TheProgrammingInn.Com.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20201016005101_Revert")]
+    partial class Revert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,7 +275,7 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlogId")
                         .HasColumnType("nvarchar(450)");
@@ -285,8 +287,6 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BlogId");
 
@@ -301,7 +301,7 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -313,8 +313,6 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("MainCommentId");
 
@@ -382,11 +380,6 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
                 {
-                    b.HasOne("TheProgrammingInn.Com.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("MainComments")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("TheProgrammingInn.Com.Models.Blog", "Blog")
                         .WithMany("MainComments")
                         .HasForeignKey("BlogId")
@@ -395,11 +388,6 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
                 {
-                    b.HasOne("TheProgrammingInn.Com.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("SubComments")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("TheProgrammingInn.Com.Models.MainComment", "MainComment")
                         .WithMany("SubComments")
                         .HasForeignKey("MainCommentId")

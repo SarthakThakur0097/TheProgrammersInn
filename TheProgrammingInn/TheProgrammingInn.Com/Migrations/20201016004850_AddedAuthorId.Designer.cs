@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheProgrammingInn.Com.Data;
 
 namespace TheProgrammingInn.Com.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20201016004850_AddedAuthorId")]
+    partial class AddedAuthorId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,6 +249,35 @@ namespace TheProgrammingInn.Com.Migrations
                     b.ToTable("Blogs");
                 });
 
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Comment");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Comment");
+                });
+
             modelBuilder.Entity("TheProgrammingInn.Com.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -267,58 +298,26 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasBaseType("TheProgrammingInn.Com.Models.Comment");
 
                     b.Property<string>("BlogId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("BlogId");
 
-                    b.ToTable("MainComments");
+                    b.HasDiscriminator().HasValue("MainComment");
                 });
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                    b.HasBaseType("TheProgrammingInn.Com.Models.Comment");
 
                     b.Property<int>("MainCommentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("MainCommentId");
 
-                    b.ToTable("SubComments");
+                    b.HasDiscriminator().HasValue("SubComment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -380,13 +379,16 @@ namespace TheProgrammingInn.Com.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.Comment", b =>
                 {
                     b.HasOne("TheProgrammingInn.Com.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("MainComments")
+                        .WithMany("Comments")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
 
+            modelBuilder.Entity("TheProgrammingInn.Com.Models.MainComment", b =>
+                {
                     b.HasOne("TheProgrammingInn.Com.Models.Blog", "Blog")
                         .WithMany("MainComments")
                         .HasForeignKey("BlogId")
@@ -395,11 +397,6 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.SubComment", b =>
                 {
-                    b.HasOne("TheProgrammingInn.Com.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("SubComments")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("TheProgrammingInn.Com.Models.MainComment", "MainComment")
                         .WithMany("SubComments")
                         .HasForeignKey("MainCommentId")
