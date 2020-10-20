@@ -36,9 +36,9 @@ namespace TheProgrammingInn.Com.Repository
                 return null;
             return ImageConversion(blog);
             }
-        public IList<Blog> GetAllBlogs() => ImageConversion(_context.Blogs
+        public IList<Blog> GetAllBlogs() => _context.Blogs
             .Include(p => p.DisplayImage)
-            .ToList());
+            .ToList();
       
         public Blog Update(Blog pageToChange)
         {
