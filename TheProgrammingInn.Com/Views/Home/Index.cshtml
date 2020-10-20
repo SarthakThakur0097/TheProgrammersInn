@@ -5,27 +5,37 @@
 }
 <div class="container-fluid">
     <div class="row flex-row flex-nowrap">
-        @foreach (var pageToPrint in Model)
+        @if (Model != null)
         {
+            @foreach (var pageToPrint in Model)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@pageToPrint.ImageDataURL" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@pageToPrint.Title</h5>
+                        <p class="card-text">@pageToPrint.Description</p>
 
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="@pageToPrint.ImageDataURL" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">@pageToPrint.Title</h5>
-                    <p class="card-text">@pageToPrint.Description</p>
-                    <a ref="#" class="btn btn-primary"
-                       asp-controller="Blog" asp-action="Index" asp-route-title="@pageToPrint.Title">View</a>
-                    @if (User.IsInRole("Admin"))
-                    {
-                <form asp-controller="Admin" asp-action="DeleteBlog" asp-route-title="@pageToPrint.Title" method="post">
-                    <button type="submit" class="btn btn-danger"
-                            onclick="return confirm('Are you sure you want to delete user: @pageToPrint.Title')">
-                        Delete
-                    </button>
-                </form>
-                    }
+                        <a ref="#" class="btn btn-primary"
+                           asp-controller="Blog" asp-action="Index" asp-route-title="@pageToPrint.Title">View</a>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <form asp-controller="Admin" asp-action="DeleteBlog" asp-route-title="@pageToPrint.Title" method="post">
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete user: @pageToPrint.Title')">
+                                    Delete
+                                </button>
+                            </form>
+                        }
+                    </div>
                 </div>
-            </div>
+            }
+        }
+        else
+        {
+        <div>
+            <h4>Currently no Blogs</h4>
+        </div>
         }
     </div>
 </div>
