@@ -22,7 +22,7 @@ namespace TheProgrammingInn.Com.Repository
         }
         public Blog GetByTitle(string title) 
         {
-            if (GetAllBlogs().Count == 0)
+            if (GetAllBlogs().Count == 0 )
                 return null;
             var blog = _context.Blogs
             .Include(p => p.DisplayImage)
