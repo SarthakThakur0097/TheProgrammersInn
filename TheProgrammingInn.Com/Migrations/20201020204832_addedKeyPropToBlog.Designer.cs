@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheProgrammingInn.Com.Data;
 
 namespace TheProgrammingInn.Com.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20201020204832_addedKeyPropToBlog")]
+    partial class addedKeyPropToBlog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,8 +227,10 @@ namespace TheProgrammingInn.Com.Migrations
 
             modelBuilder.Entity("TheProgrammingInn.Com.Models.Blog", b =>
                 {
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -240,7 +244,10 @@ namespace TheProgrammingInn.Com.Migrations
                     b.Property<int?>("DisplayImageId")
                         .HasColumnType("int");
 
-                    b.HasKey("Title");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("DisplayImageId");
 
@@ -276,7 +283,10 @@ namespace TheProgrammingInn.Com.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BlogId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BlogId1")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -288,7 +298,7 @@ namespace TheProgrammingInn.Com.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("BlogId");
+                    b.HasIndex("BlogId1");
 
                     b.ToTable("MainComments");
                 });
@@ -389,7 +399,7 @@ namespace TheProgrammingInn.Com.Migrations
 
                     b.HasOne("TheProgrammingInn.Com.Models.Blog", "Blog")
                         .WithMany("MainComments")
-                        .HasForeignKey("BlogId")
+                        .HasForeignKey("BlogId1")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

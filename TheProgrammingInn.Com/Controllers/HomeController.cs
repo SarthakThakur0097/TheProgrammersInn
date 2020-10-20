@@ -22,6 +22,7 @@ namespace TheProgrammingInn.Com.Controllers
             _logger = logger;
             _context = context;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -34,7 +35,6 @@ namespace TheProgrammingInn.Com.Controllers
                 return View(pages);
             }
         }
-
 
         public IActionResult Privacy()
         {

@@ -28,7 +28,7 @@
             <hr>
             @*900x300*@
             <!-- Preview Image -->
-            <img class="img-fluid rounded" style="height: 300px; width: 900px;"src="@Model.ImageDataURL" alt="">
+            <img class="img-fluid rounded" style="height: 300px; width: 900px;" src="@Model.ImageDataURL" alt="">
 
             <hr>
 
@@ -43,7 +43,6 @@
             @{
                 await Html.RenderPartialAsync("_MainComment", new CommentViewModel { BlogTitle = Model.Title, MainCommentId = 0 });
             }
-
             @for (int i = Model.MainComments.Count - 1; i >= 0; i--)
             {
                 <!-- Single Comment -->
@@ -55,6 +54,7 @@
                     </div>
 
                 </div>
+                <!-- Comment with nested comments -->
                 <div style="margin-left: 40px;">
                     @{
                         await Html.RenderPartialAsync("_MainComment", new CommentViewModel { BlogTitle = Model.Title, MainCommentId = Model.MainComments[i].Id });
@@ -72,16 +72,9 @@
                     }
                 </div>
             }
-
-
-            <!-- Comment with nested comments -->
-
-
         </div>
-
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
-
             <!-- Search Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
@@ -94,7 +87,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Categories Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Categories</h5>
@@ -129,7 +121,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Side Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Side Widget</h5>
