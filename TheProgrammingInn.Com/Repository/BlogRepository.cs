@@ -22,24 +22,36 @@ namespace TheProgrammingInn.Com.Repository
         }
         public Blog GetByTitle(string title) 
         {
-            if (GetAllBlogs().Count == 0 && GetAllBlogs() != null )
+            if(GetAllBlogs() != null)
+            {
+                if (GetAllBlogs().Count == 0)
+                    return null;
+                var blog = _context.Blogs
+                .Include(p => p.DisplayImage)
+                .Include(p => p.MainComments)
+                    .ThenInclude(mc => mc.SubComments)
+                    .ThenInclude(sc => sc.ApplicationUser)
+                .Include(p => p.MainComments)
+                    .ThenInclude(mc => mc.ApplicationUser)
+                .SingleOrDefault(p => p.Title == title);
+                if (blog == null)
+                    return null;
+                return ImageConversion(blog);
+            }
+            return null;
+           
+        }
+
+        public IList<Blog> GetAllBlogs()
+        {
+            if (_context.Blogs.ToList().Count == 0)
                 return null;
             var blog = _context.Blogs
-            .Include(p => p.DisplayImage)
-            .Include(p => p.MainComments)
-                .ThenInclude(mc => mc.SubComments)
-                .ThenInclude(sc => sc.ApplicationUser)
-            .Include(p => p.MainComments)
-                .ThenInclude(mc => mc.ApplicationUser)
-            .SingleOrDefault(p => p.Title == title);
-            if (blog == null)
-                return null;
+              .Include(p => p.DisplayImage)
+              .ToList();
             return ImageConversion(blog);
-            }
-        public IList<Blog> GetAllBlogs() => _context.Blogs
-            .Include(p => p.DisplayImage)
-            .ToList();
-      
+        }
+
         public Blog Update(Blog pageToChange)
         {
             var updatedPage = _context.Blogs.Attach(pageToChange);
