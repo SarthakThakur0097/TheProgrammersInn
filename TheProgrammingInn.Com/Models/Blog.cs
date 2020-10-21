@@ -24,7 +24,7 @@ namespace TheProgrammingInn.Com.Models
         public Image? DisplayImage { get; set; }
         [NotMapped]
         public string ImageDataURL { get; set; }
-        public DateTime dateTime { get; set; } = DateTime.Now;
+        public DateTime DateTime { get; set; }
         public List<MainComment> MainComments { get; set; }
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Models;
 using TheProgrammingInn.Com.Repository;
-using TheProgrammingInn.Com.ViewModels;
 
 namespace TheProgrammingInn.Com.Controllers
 {
@@ -22,6 +19,7 @@ namespace TheProgrammingInn.Com.Controllers
             _logger = logger;
             _context = context;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -34,7 +32,6 @@ namespace TheProgrammingInn.Com.Controllers
                 return View(pages);
             }
         }
-
 
         public IActionResult Privacy()
         {

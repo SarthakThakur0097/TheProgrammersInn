@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Models;
 using TheProgrammingInn.Com.Repository;
@@ -11,7 +10,6 @@ using TheProgrammingInn.Com.ViewModels;
 
 namespace TheProgrammingInn.Com.Controllers
 {
-    [AllowAnonymous]
     public class BlogController : Controller
     {
         private readonly Context _context;
@@ -24,6 +22,7 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index(string title)
         {
             using(_context)
@@ -34,6 +33,7 @@ namespace TheProgrammingInn.Com.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Comment(CommentViewModel viewModel)
         {
             using (_context)

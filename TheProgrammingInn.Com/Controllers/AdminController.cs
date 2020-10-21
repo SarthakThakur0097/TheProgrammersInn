@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -217,6 +218,25 @@ namespace TheProgrammingInn.Com.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteBlog(string title)
+        {
+            using(_context)
+            {
+                try
+                {
+                    new BlogRepository(_context).Delete(title);
+                }
+                catch(Exception e)
+                {
+                    ViewBag.ErrorMessage = e.Message;
+
+                    return View("NotFound");
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
