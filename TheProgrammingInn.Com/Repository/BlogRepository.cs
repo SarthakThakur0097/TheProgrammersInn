@@ -13,12 +13,13 @@ namespace TheProgrammingInn.Com.Repository
         public BlogRepository(Context context)
         {
             _context = context;
+            
         }
+
         public void Insert(Blog toInsert)
         {
             _context.Blogs.Add(toInsert);
             _context.SaveChanges();
-
         }
         public Blog GetByTitle(string title) 
         {
@@ -42,7 +43,7 @@ namespace TheProgrammingInn.Com.Repository
            
         }
 
-        public IList<Blog> GetAllBlogs()
+        public ICollection<Blog> GetAllBlogs()
         {
             if (_context.Blogs.ToList().Count == 0)
                 return null;
@@ -71,6 +72,7 @@ namespace TheProgrammingInn.Com.Repository
             }
             return page;
         }
+
         public Blog ImageConversion(Blog toConvert)
         {
             string imageBase64Data = Convert.ToBase64String(toConvert.DisplayImage.ImageData);

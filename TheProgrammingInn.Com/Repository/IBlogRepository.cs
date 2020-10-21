@@ -9,6 +9,6 @@ namespace TheProgrammingInn.Com.Repository
         Blog GetByTitle(string title);
         Blog Update(Blog pageToChange);
         Blog Delete(string title);
-        IList<Blog> GetAllBlogs();
+        ICollection<Blog> GetAllBlogs();
     }
 }
