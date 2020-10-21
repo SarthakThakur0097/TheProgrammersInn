@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TheProgrammingInn.Com.Data;
 using TheProgrammingInn.Com.Models;
 using TheProgrammingInn.Com.Repository;
-using TheProgrammingInn.Com.ViewModels;
 
 namespace TheProgrammingInn.Com.Controllers
 {
